@@ -8,3 +8,5 @@ Shows the following statistics per URL:
   Number of hits over time,
   Average execution over time,
   Http errors over time
+  
+Single executable
