@@ -1,0 +1,10 @@
+SELECT
+  date as DateGMT,
+	TO_LOCALTIME(QUANTIZE(time,3600)) AS TimeGMT,
+	COUNT(*) AS Hits
+FROM
+	'<%FILENAME%>'
+GROUP BY
+	date, TimeGMT
+ORDER BY
+	date, TimeGMT ASC
