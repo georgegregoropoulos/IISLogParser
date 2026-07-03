@@ -70,11 +70,24 @@ namespace IISLogParser {
           + " ORDER BY "
           + " DateGMT, TimeGMT ASC";
 
+        string kbytes_per_minute = " SELECT "
+          + " date as DateGMT, "
+          + " QUANTIZE(time, 300) AS TimeGMT, "
+          + " AVG(CAST(cs-bytes as REAL)) / 1024 as AvgKBytesPerMinute "
+          + " FROM "
+          + "  '<%FILENAME%>' "
+          + " WHERE cs-uri-stem like '{0}' "
+          + " GROUP BY "
+          + " date, TimeGMT "
+          + " ORDER BY "
+          + " DateGMT, TimeGMT ASC";
+
         hits = String.Format(hits, txtUri.Text);
 
         string exec = string.Format(s, txtUri.Text);
         string exec2 = string.Format(s2, txtUri.Text);
         string hits_err = String.Format(hits_error, txtUri.Text);
+        string kbytes_fmt = String.Format(kbytes_per_minute, txtUri.Text);
 
         LogParser.LogParser p = new IISLogParser.LogParser.LogParser(Logfilenames);
 
@@ -83,6 +96,7 @@ namespace IISLogParser {
         script.Add(hits);
         script.Add(exec2);
         script.Add(hits_err);
+        script.Add(kbytes_fmt);
 
         Dictionary<string, string> result = p.Run(script);
 
@@ -212,6 +226,39 @@ namespace IISLogParser {
           m_chart_hitsError.ChartAreas[0].AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Hours;
           m_chart_hitsError.ChartAreas[0].AxisX.Interval = 1;
           m_chart_hitsError.Legends.Clear();
+        }
+
+        if (result["customScript_4"] != null) {
+          string[] lines = result["customScript_4"].Split(new char[] { '\n' });
+
+          System.Windows.Forms.DataVisualization.Charting.Series ser = new System.Windows.Forms.DataVisualization.Charting.Series("Avg KBytes per 5mins");
+          ser.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+
+          for (int i = 0; i < lines.Count(); ++i) {
+            if (i == 0) continue;
+
+            if (String.IsNullOrEmpty(lines[i])) break;
+            if (lines[i] == "\r") break;
+
+            string[] col = lines[i].Split(new char[] { '\t' });
+
+            if (col == null || col.Length != 3) break;
+            DateTime dt = DateTime.Parse(col[0] + " " + col[1]);
+
+            ser.Points.AddXY(dt.ToOADate(), Convert.ToDouble(col[2]));
+          }
+
+          ser.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+          ser.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+
+          m_chart_kbytesPerMinute.ChartAreas.Clear();
+          m_chart_kbytesPerMinute.ChartAreas.Add(new System.Windows.Forms.DataVisualization.Charting.ChartArea("Avg KBytes per 5mins"));
+          m_chart_kbytesPerMinute.Series.Clear();
+          m_chart_kbytesPerMinute.Series.Add(ser);
+          m_chart_kbytesPerMinute.ChartAreas[0].AxisX.LabelStyle.Format = "HH:mm:ss";
+          m_chart_kbytesPerMinute.ChartAreas[0].AxisX.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Hours;
+          m_chart_kbytesPerMinute.ChartAreas[0].AxisX.Interval = 1;
+          m_chart_kbytesPerMinute.Legends.Clear();
         }
       }
       catch (Exception ex) {

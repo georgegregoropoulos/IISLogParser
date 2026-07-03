@@ -40,6 +40,9 @@
       System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
       System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
       System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+      System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+      System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+      System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
       this.panel1 = new System.Windows.Forms.Panel();
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
@@ -53,6 +56,8 @@
       this.grpChart1 = new System.Windows.Forms.GroupBox();
       this.grp_HitsError = new System.Windows.Forms.GroupBox();
       this.m_chart_hitsError = new System.Windows.Forms.DataVisualization.Charting.Chart();
+      this.grp_KBytesPerMinute = new System.Windows.Forms.GroupBox();
+      this.m_chart_kbytesPerMinute = new System.Windows.Forms.DataVisualization.Charting.Chart();
       this.panel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.m_chartExec)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.m_chartHits)).BeginInit();
@@ -62,6 +67,8 @@
       this.grpChart1.SuspendLayout();
       this.grp_HitsError.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.m_chart_hitsError)).BeginInit();
+      this.grp_KBytesPerMinute.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.m_chart_kbytesPerMinute)).BeginInit();
       this.SuspendLayout();
       // 
       // panel1
@@ -240,11 +247,43 @@
       this.m_chart_hitsError.TabIndex = 3;
       this.m_chart_hitsError.Text = "chart1";
       // 
+      // grp_KBytesPerMinute
+      // 
+      this.grp_KBytesPerMinute.Controls.Add(this.m_chart_kbytesPerMinute);
+      this.grp_KBytesPerMinute.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.grp_KBytesPerMinute.Location = new System.Drawing.Point(0, 873);
+      this.grp_KBytesPerMinute.Margin = new System.Windows.Forms.Padding(2);
+      this.grp_KBytesPerMinute.Name = "grp_KBytesPerMinute";
+      this.grp_KBytesPerMinute.Padding = new System.Windows.Forms.Padding(2);
+      this.grp_KBytesPerMinute.Size = new System.Drawing.Size(1145, 245);
+      this.grp_KBytesPerMinute.TabIndex = 7;
+      this.grp_KBytesPerMinute.TabStop = false;
+      this.grp_KBytesPerMinute.Text = "Avg KBytes per 5mins";
+      // 
+      // m_chart_kbytesPerMinute
+      // 
+      chartArea9.Name = "ChartArea1";
+      this.m_chart_kbytesPerMinute.ChartAreas.Add(chartArea9);
+      this.m_chart_kbytesPerMinute.Dock = System.Windows.Forms.DockStyle.Fill;
+      legend9.Name = "Legend1";
+      this.m_chart_kbytesPerMinute.Legends.Add(legend9);
+      this.m_chart_kbytesPerMinute.Location = new System.Drawing.Point(2, 15);
+      this.m_chart_kbytesPerMinute.Margin = new System.Windows.Forms.Padding(2);
+      this.m_chart_kbytesPerMinute.Name = "m_chart_kbytesPerMinute";
+      series9.ChartArea = "ChartArea1";
+      series9.Legend = "Legend1";
+      series9.Name = "Series1";
+      this.m_chart_kbytesPerMinute.Series.Add(series9);
+      this.m_chart_kbytesPerMinute.Size = new System.Drawing.Size(1141, 228);
+      this.m_chart_kbytesPerMinute.TabIndex = 3;
+      this.m_chart_kbytesPerMinute.Text = "chart1";
+      // 
       // frmExecOverTime
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1145, 873);
+      this.ClientSize = new System.Drawing.Size(1145, 1118);
+      this.Controls.Add(this.grp_KBytesPerMinute);
       this.Controls.Add(this.grp_HitsError);
       this.Controls.Add(this.grpChart3);
       this.Controls.Add(this.grpChart1);
@@ -263,6 +302,8 @@
       this.grpChart1.ResumeLayout(false);
       this.grp_HitsError.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.m_chart_hitsError)).EndInit();
+      this.grp_KBytesPerMinute.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.m_chart_kbytesPerMinute)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -282,5 +323,7 @@
     private System.Windows.Forms.GroupBox grpChart1;
     private System.Windows.Forms.GroupBox grp_HitsError;
     private System.Windows.Forms.DataVisualization.Charting.Chart m_chart_hitsError;
+    private System.Windows.Forms.GroupBox grp_KBytesPerMinute;
+    private System.Windows.Forms.DataVisualization.Charting.Chart m_chart_kbytesPerMinute;
   }
 }
